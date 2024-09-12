@@ -3,7 +3,7 @@ package logger_test
 import (
 	"testing"
 
-	"github.com/abialemuel/poly-kit/libs/logger"
+	"github.com/abialemuel/poly-kit/infrastructure/logger"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )

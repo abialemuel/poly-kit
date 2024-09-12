@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/abialemuel/poly-kit/libs/system"
+	"github.com/abialemuel/poly-kit/infrastructure/system"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 )
