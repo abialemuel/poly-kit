@@ -82,12 +82,11 @@ func (t *DatadogTracer) AddEvent(ctx context.Context, name string, attrs ...attr
 
 		// Special handling for "error" attributes
 		if attr.Key == attribute.Key("error") {
+			span.SetTag("error", true)
 			span.SetTag("error.message", fmt.Errorf("err : %s", value))
 			span.SetTag("error.stack", fmt.Sprintf("%+v", value))
-		} else {
-			// Safely set other tags
-			span.SetTag(key, value)
 		}
+		span.SetTag(key, value)
 	}
 
 }
