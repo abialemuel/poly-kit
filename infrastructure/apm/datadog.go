@@ -82,7 +82,7 @@ func (t *DatadogTracer) AddEvent(ctx context.Context, name string, attrs ...attr
 
 		// Special handling for "error" attributes
 		if attr.Key == attribute.Key("error") {
-			span.SetTag("error", attr.Value) // Use string representation
+			tracer.WithError(fmt.Errorf("err : %s", value)) // Use string representation
 		} else {
 			// Safely set other tags
 			span.SetTag(key, value)
