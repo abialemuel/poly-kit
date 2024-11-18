@@ -72,12 +72,21 @@ func (t *DatadogTracer) AddEvent(ctx context.Context, name string, attrs ...attr
 	}
 
 	for _, attr := range attrs {
-		if attr.Key == attribute.Key("error") {
-			err := fmt.Errorf("error: %s", attr.Value.AsString())
-			span.SetTag("error", err)
+		key := fmt.Sprintf("%s.%s", name, string(attr.Key))
+		value := attr.Value.AsInterface()
+
+		// Validate key and value
+		if key == "" || value == nil {
+			continue // Skip invalid attributes
 		}
-		// get key string and value as interface
-		span.SetTag(fmt.Sprintf("%s.%s", name, string(attr.Key)), attr.Value.AsInterface())
+
+		// Special handling for "error" attributes
+		if attr.Key == attribute.Key("error") {
+			span.SetTag("error", attr.Value.AsString()) // Use string representation
+		} else {
+			// Safely set other tags
+			span.SetTag(key, value)
+		}
 	}
 
 }
